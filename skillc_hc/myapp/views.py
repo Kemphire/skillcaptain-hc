@@ -17,6 +17,7 @@ def profile_update(request):
                 Profile.objects.create(name=name,
                                        mobile_no = mobile_no,
                                        address = address,
+                                       email = email
                                        )
                 return redirect('profile')
             except Exception as e:
