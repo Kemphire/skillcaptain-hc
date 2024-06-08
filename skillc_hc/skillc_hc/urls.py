@@ -16,12 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from myapp.views import hello, profile_update,profile_renderer,profile_change 
+from myapp.views import hello, profile_update,profile_renderer,profile_change,specific_profile_show
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("hello/",hello,name = "welcome"),
     path("name/",profile_update,name = "profile"),
-    path("name/<str:name>",profile_change,name="profile-change"),
-    path("view/",profile_renderer,name="profile-views")
+    path("profile/<str:name>/email",profile_change,name="profile-change"),
+    path("view/",profile_renderer,name="profile-views"),
+    path("profile/<str:name>",specific_profile_show,name="indiviual_profile")
 ]

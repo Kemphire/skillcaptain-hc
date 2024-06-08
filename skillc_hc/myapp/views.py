@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 
 from .models import Profile
@@ -31,16 +31,20 @@ def profile_update(request):
 
 
 def profile_change(request, name: str):
+    prof = get_object_or_404(Profile,name=name)
     if request.method == "POST":
-        obj = Profile.objects.filter(name=name)
-        obj.email = request.POST.get("email", "")
-        obj.address = request.POST.get("address", "")
-        obj_all = Profile.objects.all()
-        return render(request, "profile.html", {"saved_names": obj_all})
+        prof.email = request.POST.get("email")
+        prof.save()
+        return redirect("profile-views")
     else:
-        return render(request, "profile_email_update.html", {"name_v": name})
+        return render(request,"profile_email_update.html",{"person":prof})
 
 
 def profile_renderer(request):
     obj = Profile.objects.all()
     return render(request, "profile.html", {"saved_names": obj})
+
+def specific_profile_show(request,name):
+    person = get_object_or_404(Profile,name=name)
+    return render(request,"indiviudal_profile.html",{"person":person})
+
