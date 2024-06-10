@@ -1,1 +1,57 @@
-.venv
+# virtual env
+virtual
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+
+# Ignore the database
+*.sqlite3
+
+# Ignore media files
+media/
+
+# Ignore static files
+staticfiles/
+
+# Ignore environment file
+.env
+
+# Ignore IDE-specific files
+.idea/
+.vscode/
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db
+
