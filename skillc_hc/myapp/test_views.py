@@ -40,7 +40,7 @@ class PostDeletionTestCase(TestCase):
         self.assertEqual(Profile.objects.count(),0)
 
     def test_post_update(self):
-        response = self.client.patch(self.url,{"name":"shinchain"})
+        response = self.client.put(self.url,{"name":"shinchain","email":"shinchain@google.com"})
         self.assertEqual(response.status_code,200)
         self.assertEqual(Profile.objects.count(),1)
         self.assertEqual(Profile.objects.first().name,"shinchain")

@@ -73,22 +73,19 @@ def profile_detail_view(request,pk):
             data = {"id":profile_obj.id,"name":profile_obj.name,"email":profile_obj.email}
             return JsonResponse(data)
         elif request.method == "PUT":
-            name = request.PUT.get("name")
-            email = request.PUT.get("email")
-            if name and email:
-                profile_obj.name = name
-                profile_obj.email = email
-            elif not name and email:
-                profile_obj.email = email
-            elif not email and name:
-                profile_obj.name = name
-            else:
-                return JsonResponse({"message":"provide atleast one field"})
-            data = {"id":profile_obj.id,"name":profile_obj.name,"email":profile_obj.email}
-            return JsonResponse(data)
+            try:
+                data = json.loads(request.body)
+                name = data.get("name")
+                email = data.get("email")
+                if name:
+                    profile_obj.name = name
+                if email:
+                    profile_obj.email = email
+            except json.JSONDecodeError:
+                return JsonResponse({"message":"Invalid json data"})
         elif request.method == "DELETE":
             profile_obj.delete()
-            return JsonResponse({"message":f"Profile successfully deleted! with {pk=}"})
+            return JsonResponse({"message":f"Profile successfully deleted! with pk = {pk}"})
         else:
             return JsonResponse({"messag":"http method not supported"})
     except profile_obj.DoesNotExist:

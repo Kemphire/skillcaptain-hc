@@ -1,2 +1,0 @@
-# Initially the api testing through postman/curl part was hard for me but after some digging i completed them
-# But the writting test was new for me, and i wrote them except the one for the PUT endpoint where i have to update the content of the profile instnace, i think i need to dig more in django testing
