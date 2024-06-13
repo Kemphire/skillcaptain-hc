@@ -75,10 +75,15 @@ WSGI_APPLICATION = 'skillc_hc.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 [os.path.join(BASE_DIR,'templates')]
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'hitmonlee',
+        'PASSWORD': "",
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
