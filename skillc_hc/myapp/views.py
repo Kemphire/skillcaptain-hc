@@ -6,6 +6,7 @@ from django.core import serializers
 from .models import Profile
 import json
 
+
 def hello(request):
     return HttpResponse("<h1>Hello to everyone.</h1>")
 
@@ -33,24 +34,26 @@ def profile_update(request):
 
 
 def profile_change(request, name: str):
-    prof = get_object_or_404(Profile,name=name)
+    prof = get_object_or_404(Profile, name=name)
     if request.method == "POST":
         prof.email = request.POST.get("email")
         prof.save()
         return redirect("profile-views")
     else:
-        return render(request,"profile_email_update.html",{"person":prof})
+        return render(request, "profile_email_update.html", {"person": prof})
 
 
 def profile_renderer(request):
     obj = Profile.objects.all()
     return render(request, "profile.html", {"saved_names": obj})
 
-def specific_profile_show(request,name):
-    person = get_object_or_404(Profile,name=name)
-    return render(request,"indiviudal_profile.html",{"person":person})
 
-def profile_detail_view(request,pk):
+def specific_profile_show(request, name):
+    person = get_object_or_404(Profile, name=name)
+    return render(request, "indiviudal_profile.html", {"person": person})
+
+
+def profile_detail_view(request, pk):
     """
     Description:
     Provide the detail of the profile in json format
@@ -68,9 +71,13 @@ def profile_detail_view(request,pk):
     NONE
     """
     try:
-        profile_obj = get_object_or_404(Profile,pk=pk)
+        profile_obj = get_object_or_404(Profile, pk=pk)
         if request.method == "GET":
-            data = {"id":profile_obj.id,"name":profile_obj.name,"email":profile_obj.email}
+            data = {
+                "id": profile_obj.id,
+                "name": profile_obj.name,
+                "email": profile_obj.email,
+            }
             return JsonResponse(data)
         elif request.method == "PUT":
             try:
@@ -82,16 +89,21 @@ def profile_detail_view(request,pk):
                 if email:
                     profile_obj.email = email
             except json.JSONDecodeError:
-                return JsonResponse({"message":"Invalid json data"})
+                return JsonResponse({"message": "Invalid json data"})
         elif request.method == "DELETE":
             profile_obj.delete()
-            return JsonResponse({"message":f"Profile successfully deleted! with pk = {pk}"})
+            return JsonResponse(
+                {"message": f"Profile successfully deleted! with pk = {pk}"}
+            )
         else:
-            return JsonResponse({"messag":"http method not supported"})
+            return JsonResponse({"messag": "http method not supported"})
     except profile_obj.DoesNotExist:
-        return JsonResponse({"message":"profile with given primary key does not exist"})
+        return JsonResponse(
+            {"message": "profile with given primary key does not exist"}
+        )
 
-@csrf_exempt  
+
+@csrf_exempt
 def profile_get_or_create(request):
     """
     Description:
@@ -110,18 +122,21 @@ def profile_get_or_create(request):
         name = request.POST.get("name")
         email = request.POST.get("email")
         if name and email:
-            profile = Profile(name=name,email=email)
+            profile = Profile(name=name, email=email)
         else:
-            return JsonResponse({"message":"missing fields profile can't be created"})
+            return JsonResponse({"message": "missing fields profile can't be created"})
         profile.save()
-        serialized_obj = serializers.serialize('json',[profile,])
+        serialized_obj = serializers.serialize(
+            "json",
+            [
+                profile,
+            ],
+        )
         data = json.loads(serialized_obj)
-        return JsonResponse({"message":"Profile create sucessfully","data":data[0]})
+        return JsonResponse({"message": "Profile create sucessfully", "data": data[0]})
     elif request.method == "GET":
         profiles = Profile.objects.all()
-        data = [{"name":profile.name,"email":profile.email} for profile in profiles]
-        return JsonResponse(data,safe=False)
+        data = [{"name": profile.name, "email": profile.email} for profile in profiles]
+        return JsonResponse(data, safe=False)
     else:
-        return JsonResponse({"message":"Method not supported"},status=405)
-
-    
+        return JsonResponse({"message": "Method not supported"}, status=405)
