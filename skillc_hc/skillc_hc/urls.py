@@ -33,4 +33,5 @@ urlpatterns = [
     path("view/", profile_renderer, name="profile-views"),
     path("profile/<str:name>", specific_profile_show, name="indiviual_profile"),
     path("profiles/", include("myapp.url")),
+    path("book/",include("book.url")),
 ]
