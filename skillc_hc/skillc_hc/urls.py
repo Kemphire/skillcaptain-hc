@@ -27,11 +27,12 @@ from myapp.views import (
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("hello/", hello, name="welcome"),
+    path("hello/", hello, name="home"),
     path("name/", profile_update, name="profile"),
     path("profile/<str:name>/email", profile_change, name="profile-change"),
     path("view/", profile_renderer, name="profile-views"),
     path("profile/<str:name>", specific_profile_show, name="indiviual_profile"),
     path("profiles/", include("myapp.url")),
     path("book/",include("book.url")),
+    path("auth/", include("authentication.url")),
 ]

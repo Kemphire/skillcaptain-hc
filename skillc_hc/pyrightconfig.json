@@ -1,0 +1,27 @@
+{
+	"include": ["skillc_hc"],
+	"exclude": ["**/migrations", "**/__pycache__"],
+	"typeCheckingMode": "basic",
+	"reportMissingImports": true,
+	"reportUnnecessaryTypeIgnoreComment": true,
+	"reportUnusedImport": true,
+	"reportUnusedVariable": true,
+	"reportGeneralTypeIssues": true,
+	"reportOptionalSubscript": false,
+	"reportOptionalMemberAccess": false,
+	"pythonVersion": "3.11",
+	"venvPath": "../.venv",
+	"executionEnvironments": [
+		{
+			"root": "skillc_hc",
+			"pythonVersion": "3.11"
+		}
+	],
+	"extraPaths": ["skillc_hc"],
+	"django": {
+		"enabled": true,
+		"projectRoot": "skillc_hc",
+		"settingsModule": "skillc_hc.settings"
+	}
+}
+
