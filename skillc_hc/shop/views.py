@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.core import serializers
-import json
 from datetime import date, timedelta
 
 from .models import Product
